@@ -2,7 +2,7 @@ import { Alert } from '../../entities/alert'
 
 export abstract class AlertsRepository {
   abstract findById(id: string): Promise<Alert | null>
-  abstract findByUserId(
+  abstract findManyByUserId(
     userId: string,
     filterByActive: boolean,
   ): Promise<Alert[] | null>

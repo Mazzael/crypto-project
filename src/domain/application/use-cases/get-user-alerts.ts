@@ -17,7 +17,7 @@ export class ListUserAlertsUseCase {
     userId,
     filterByActive,
   }: ListUserAlertsUseCaseRequest): Promise<ListUserAlertsUseCaseResponse> {
-    const alerts = await this.alertsRepository.findByUserId(
+    const alerts = await this.alertsRepository.findManyByUserId(
       userId,
       filterByActive,
     )

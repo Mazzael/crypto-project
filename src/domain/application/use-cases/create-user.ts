@@ -9,7 +9,7 @@ interface CreateUserUseCaseRequest {
   password: string
 }
 
-interface CreateQuestionUseCaseResponse {
+interface CreateUserUseCaseResponse {
   user: User
 }
 
@@ -23,10 +23,12 @@ export class CreateUserUseCase {
     userName,
     email,
     password,
-  }: CreateUserUseCaseRequest): Promise<CreateQuestionUseCaseResponse> {
+  }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
     const userWithSameEmail = await this.usersRepository.findByEmail(email)
+    const userWithSameUserName =
+      await this.usersRepository.findByUserName(userName)
 
-    if (userWithSameEmail) {
+    if (userWithSameEmail || userWithSameUserName) {
       throw new Error('User already exists.')
     }
 

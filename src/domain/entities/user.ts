@@ -20,6 +20,18 @@ export class User {
     return this._id
   }
 
+  get passwordHash() {
+    return this._passwordHash
+  }
+
+  get email() {
+    return this._email
+  }
+
+  get userName() {
+    return this._userName
+  }
+
   changeUserName(newUserName: string) {
     this._userName = newUserName
   }

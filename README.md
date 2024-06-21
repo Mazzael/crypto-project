@@ -4,56 +4,56 @@
 
 Requisito: 
 
-- O sistema deve permitir que novos usuários se registrem com um nome de usuário, senha e email.
+[x] O sistema deve permitir que novos usuários se registrem com um nome de usuário, senha e email.
 
 Regra de Negócio:
 
-- O nome de usuário deve ser único.
-- A senha deve ser armazenada de forma segura (hashed).
-- O email deve ser válido e único no sistema.
+[x] O nome de usuário deve ser único.
+[x] A senha deve ser armazenada de forma segura (hashed).
+[x] O email deve ser válido e único no sistema.
 
 2. Autenticação de Usuário
 
 Requisito: 
 
-- O sistema deve permitir que usuários registrados façam login usando seu nome de usuário e senha.
+[x] O sistema deve permitir que usuários registrados façam login usando seu nome de usuário e senha.
 
 Regra de Negócio:
 
-- O sistema deve verificar a combinação de nome de usuário e senha.
-- O sistema deve manter sessões de usuário seguras, usando tokens (JWT) ou cookies seguros.
+[x] O sistema deve verificar a combinação de nome de usuário e senha.
+[x] O sistema deve manter sessões de usuário seguras, usando tokens (JWT) ou cookies seguros.
 
 3. Criação de Alertas de Preço
 
-Requisito: 
+Requisito:
 
--O sistema deve permitir que os usuários criem alertas de preço para criptomoedas específicas.
+[x] O sistema deve permitir que os usuários criem alertas de preço para criptomoedas específicas.
 
 Regra de Negócio:
 
-- Um usuário pode criar múltiplos alertas.
-- Cada alerta deve ter um preço alvo e uma criptomoeda associada.
-- O alerta deve ser armazenado como ativo por padrão.
+[x] Um usuário pode criar múltiplos alertas.
+[x] Cada alerta deve ter um preço alvo e uma criptomoeda associada.
+[x] O alerta deve ser armazenado como ativo por padrão.
 
 4. Listagem de Alertas
 
 Requisito: 
 
-- O sistema deve permitir que os usuários visualizem uma lista de seus alertas de preço.
+[x] O sistema deve permitir que os usuários visualizem uma lista de seus alertas de preço.
 
 Regra de Negócio:
 
-- A lista deve mostrar todos os alertas criados pelo usuário, ativos e inativos.
+[x] A lista deve mostrar todos os alertas criados pelo usuário, ativos e inativos.
 
 5. Deleção de Alertas
 
-Requisito: 
+Requisito:
 
-- O sistema deve permitir que os usuários deletem alertas de preço específicos.
+[x] O sistema deve permitir que os usuários deletem alertas de preço específicos.
 
 Regra de Negócio:
 
-- Apenas o usuário que criou o alerta pode deletá-lo.
+[x] Apenas o usuário que criou o alerta pode deletá-lo.
 
 6. Monitoramento de Preços de Criptomoedas
 
@@ -75,7 +75,7 @@ Requisito:
 Regra de Negócio:
 
 - As notificações podem ser enviadas via email.
--  A notificação deve incluir o nome da criptomoeda, o preço alvo e o preço atual.
+- A notificação deve incluir o nome da criptomoeda, o preço alvo e o preço atual.
 
 8. Persistência de Dados
 
