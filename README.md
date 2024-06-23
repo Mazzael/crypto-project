@@ -27,12 +27,12 @@ Regra de Negócio:
 
 Requisito:
 
-[x] O sistema deve permitir que os usuários criem alertas de preço para criptomoedas específicas.
+[x] O sistema deve permitir que os usuários criem alertas de preço para ações específicas.
 
 Regra de Negócio:
 
 [x] Um usuário pode criar múltiplos alertas.
-[x] Cada alerta deve ter um preço alvo e uma criptomoeda associada.
+[x] Cada alerta deve ter um preço alvo e uma ação associada.
 [x] O alerta deve ser armazenado como ativo por padrão.
 
 4. Listagem de Alertas
@@ -55,16 +55,16 @@ Regra de Negócio:
 
 [x] Apenas o usuário que criou o alerta pode deletá-lo.
 
-6. Monitoramento de Preços de Criptomoedas
+6. Monitoramento de Preços de Ações
 
 Requisito: 
 
-- O sistema deve monitorar os preços das criptomoedas e verificar se algum preço alvo foi atingido.
+- O sistema deve monitorar os preços das ações e verificar se algum preço alvo foi atingido.
 
 Regra de Negócio:
 
-- O sistema deve consultar periodicamente a API da CoinGecko para obter os preços atuais das criptomoedas.
-- Se o preço atual de uma criptomoeda atingir ou exceder o preço alvo de um alerta ativo, o alerta deve ser acionado (desativado) e uma notificação deve ser enviada ao usuário.
+- O sistema deve consultar periodicamente a API da CoinGecko para obter os preços atuais das ações.
+- Se o preço atual de uma ação atingir ou exceder o preço alvo de um alerta ativo, o alerta deve ser acionado (desativado) e uma notificação deve ser enviada ao usuário.
 
 7. Notificação de Usuário
 
@@ -75,7 +75,7 @@ Requisito:
 Regra de Negócio:
 
 - As notificações podem ser enviadas via email.
-- A notificação deve incluir o nome da criptomoeda, o preço alvo e o preço atual.
+- A notificação deve incluir o nome da ação, o preço alvo e o preço atual.
 
 8. Persistência de Dados
 
