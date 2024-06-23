@@ -1,3 +1,4 @@
+import { Either, right } from '../../../core/either'
 import { Encrypter } from '../cryptography/encrypter'
 import { HashComparer } from '../cryptography/hash-comparer'
 import { UsersRepository } from '../repositories/users-repository'
@@ -7,9 +8,12 @@ interface AuthenticateUserUseCaseRequest {
   password: string
 }
 
-interface AtuhenticateUserUseCaseResponse {
-  accessToken: string
-}
+type AtuhenticateUserUseCaseResponse = Either<
+  Error,
+  {
+    accessToken: string
+  }
+>
 
 export class AuthenticateUserUseCase {
   constructor(
@@ -41,8 +45,6 @@ export class AuthenticateUserUseCase {
       sub: user.id,
     })
 
-    return {
-      accessToken,
-    }
+    return right({ accessToken })
   }
 }

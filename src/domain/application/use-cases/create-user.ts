@@ -1,3 +1,4 @@
+import { Either, right } from '../../../core/either'
 import { User } from '../../entities/user'
 import { HashGenerator } from '../cryptography/hash-generator'
 import { UsersRepository } from '../repositories/users-repository'
@@ -9,9 +10,12 @@ interface CreateUserUseCaseRequest {
   password: string
 }
 
-interface CreateUserUseCaseResponse {
-  user: User
-}
+type CreateUserUseCaseResponse = Either<
+  Error,
+  {
+    user: User
+  }
+>
 
 export class CreateUserUseCase {
   constructor(
@@ -38,8 +42,6 @@ export class CreateUserUseCase {
 
     this.usersRepository.create(user)
 
-    return {
-      user,
-    }
+    return right({ user })
   }
 }

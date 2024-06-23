@@ -1,3 +1,4 @@
+import { Either, right } from '../../../core/either'
 import { Alert } from '../../entities/alert'
 import { AlertsRepository } from '../repositories/alerts-repository'
 
@@ -6,9 +7,12 @@ interface ListUserAlertsUseCaseRequest {
   filterByActive: boolean
 }
 
-interface ListUserAlertsUseCaseResponse {
-  alerts: Alert[]
-}
+type ListUserAlertsUseCaseResponse = Either<
+  Error,
+  {
+    alerts: Alert[]
+  }
+>
 
 export class ListUserAlertsUseCase {
   constructor(private alertsRepository: AlertsRepository) {}
@@ -26,8 +30,6 @@ export class ListUserAlertsUseCase {
       throw new Error('This user has no alerts.')
     }
 
-    return {
-      alerts,
-    }
+    return right({ alerts })
   }
 }

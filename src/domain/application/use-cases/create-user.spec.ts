@@ -23,7 +23,8 @@ describe('Create User', () => {
       password: '123456',
     })
 
-    expect(result.user).toEqual(inMemoryUsersRepository.items[0])
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.user).toEqual(inMemoryUsersRepository.items[0])
   })
 
   it('should hash user password upon registration', async () => {

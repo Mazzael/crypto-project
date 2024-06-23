@@ -2,6 +2,7 @@ import { Alert } from '../../entities/alert'
 import { AlertsRepository } from '../repositories/alerts-repository'
 import { randomUUID } from 'node:crypto'
 import { UsersRepository } from '../repositories/users-repository'
+import { Either, right } from '../../../core/either'
 
 interface CreateAlertUseCaseRequest {
   userId: string
@@ -9,9 +10,12 @@ interface CreateAlertUseCaseRequest {
   targetPrice: number
 }
 
-interface CreateQuestionUseCaseResponse {
-  alert: Alert
-}
+type CreateQuestionUseCaseResponse = Either<
+  Error,
+  {
+    alert: Alert
+  }
+>
 
 export class CreateAlertUseCase {
   constructor(
@@ -34,8 +38,6 @@ export class CreateAlertUseCase {
 
     this.alertsRepository.create(alert)
 
-    return {
-      alert,
-    }
+    return right({ alert })
   }
 }
