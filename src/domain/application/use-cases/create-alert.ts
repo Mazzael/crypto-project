@@ -5,7 +5,7 @@ import { UsersRepository } from '../repositories/users-repository'
 
 interface CreateAlertUseCaseRequest {
   userId: string
-  cryptoId: string
+  stockId: string
   targetPrice: number
 }
 
@@ -21,7 +21,7 @@ export class CreateAlertUseCase {
 
   async execute({
     userId,
-    cryptoId,
+    stockId,
     targetPrice,
   }: CreateAlertUseCaseRequest): Promise<CreateQuestionUseCaseResponse> {
     const user = await this.usersRepository.findById(userId)
@@ -30,7 +30,7 @@ export class CreateAlertUseCase {
       throw new Error('User not found.')
     }
 
-    const alert = new Alert(randomUUID(), user, cryptoId, targetPrice)
+    const alert = new Alert(randomUUID(), user, stockId, targetPrice)
 
     this.alertsRepository.create(alert)
 

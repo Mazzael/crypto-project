@@ -7,17 +7,17 @@ import { randomInt } from 'node:crypto'
 interface AlertProps {
   id?: string
   user?: User
-  cryptoId?: string
+  stockId?: string
   targetPrice?: number
 }
 
-export function makeAlert({ id, user, cryptoId, targetPrice }: AlertProps) {
+export function makeAlert({ id, user, stockId, targetPrice }: AlertProps) {
   const factoryUser = makeUser({})
 
   const alert = new Alert(
     id ?? faker.string.uuid(),
     user ?? factoryUser,
-    cryptoId ?? faker.internet.email(),
+    stockId ?? faker.internet.email(),
     targetPrice ?? randomInt(1000),
   )
 

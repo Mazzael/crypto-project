@@ -3,6 +3,7 @@ export class User {
   private _userName: string
   private _email: string
   private _passwordHash: string
+  private _favoriteStocksId: string[] = []
 
   constructor(
     id: string,
@@ -38,5 +39,11 @@ export class User {
 
   changePassword(newPasswordHash: string) {
     this._passwordHash = newPasswordHash
+  }
+
+  setAsFavoriteStock(stocksId: string[]) {
+    stocksId.forEach((stockId) => {
+      this._favoriteStocksId.push(stockId)
+    })
   }
 }
