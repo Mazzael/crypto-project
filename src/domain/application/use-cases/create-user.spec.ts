@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateUserUseCase } from './create-user'
 import { InMemoryUsersRepository } from '../../../../test/repositories/in-memory-users-repository'
 import { FakeHasher } from '../../../../test/cryptography/fake-hasher'
+import { makeUser } from '../../../../test/factories/make-user'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
 let fakeHasher: FakeHasher
@@ -39,5 +40,30 @@ describe('Create User', () => {
     expect(inMemoryUsersRepository.items[0].passwordHash).toEqual(
       hashedPassword,
     )
+  })
+
+  it('should not be able to create an user with same email or user name', async () => {
+    const user = makeUser({
+      email: 'johndoe@example.com',
+      userName: 'JDoe',
+    })
+
+    await inMemoryUsersRepository.create(user)
+
+    const resultSameEmail = await sut.execute({
+      userName: 'askdjkd',
+      email: 'johndoe@example.com',
+      password: '123456',
+    })
+
+    expect(resultSameEmail.isLeft()).toBe(true)
+
+    const resultSameUserName = await sut.execute({
+      userName: 'JDoe',
+      email: 'email@email.com',
+      password: '123456',
+    })
+
+    expect(resultSameUserName.isLeft()).toBe(true)
   })
 })

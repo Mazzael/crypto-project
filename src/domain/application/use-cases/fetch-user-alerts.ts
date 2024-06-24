@@ -1,33 +1,34 @@
-import { Either, right } from '../../../core/either'
+import { Either, left, right } from '../../../core/either'
 import { Alert } from '../../entities/alert'
 import { AlertsRepository } from '../repositories/alerts-repository'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
-interface ListUserAlertsUseCaseRequest {
+interface FetchUserAlertsUseCaseRequest {
   userId: string
   filterByActive: boolean
 }
 
-type ListUserAlertsUseCaseResponse = Either<
-  Error,
+type FetchUserAlertsUseCaseResponse = Either<
+  ResourceNotFoundError,
   {
     alerts: Alert[]
   }
 >
 
-export class ListUserAlertsUseCase {
+export class FetchUserAlertsUseCase {
   constructor(private alertsRepository: AlertsRepository) {}
 
   async execute({
     userId,
     filterByActive,
-  }: ListUserAlertsUseCaseRequest): Promise<ListUserAlertsUseCaseResponse> {
+  }: FetchUserAlertsUseCaseRequest): Promise<FetchUserAlertsUseCaseResponse> {
     const alerts = await this.alertsRepository.findManyByUserId(
       userId,
       filterByActive,
     )
 
     if (!alerts || alerts.length === 0) {
-      throw new Error('This user has no alerts.')
+      return left(new ResourceNotFoundError())
     }
 
     return right({ alerts })

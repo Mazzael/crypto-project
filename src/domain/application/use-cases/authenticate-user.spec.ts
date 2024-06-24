@@ -11,7 +11,7 @@ let fakeEncrypter: FakeEncrypter
 
 let sut: AuthenticateUserUseCase
 
-describe('Create User', () => {
+describe('Authenticate User', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository()
     fakeHasher = new FakeHasher()
@@ -41,5 +41,28 @@ describe('Create User', () => {
     expect(result.value).toEqual({
       accessToken: expect.any(String),
     })
+  })
+
+  it('should not be able to authenticate with wrong credentials', async () => {
+    const user = makeUser({
+      userName: 'JDoe',
+      passwordHash: await fakeHasher.hash('123456'),
+    })
+
+    inMemoryUsersRepository.create(user)
+
+    const resultWrongUserName = await sut.execute({
+      userName: 'JD',
+      password: '123456',
+    })
+
+    expect(resultWrongUserName.isLeft()).toBe(true)
+
+    const resultWrongPassword = await sut.execute({
+      userName: 'JDoe',
+      password: '1234',
+    })
+
+    expect(resultWrongPassword.isLeft()).toBe(true)
   })
 })

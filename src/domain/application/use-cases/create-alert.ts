@@ -2,7 +2,8 @@ import { Alert } from '../../entities/alert'
 import { AlertsRepository } from '../repositories/alerts-repository'
 import { randomUUID } from 'node:crypto'
 import { UsersRepository } from '../repositories/users-repository'
-import { Either, right } from '../../../core/either'
+import { Either, left, right } from '../../../core/either'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface CreateAlertUseCaseRequest {
   userId: string
@@ -11,7 +12,7 @@ interface CreateAlertUseCaseRequest {
 }
 
 type CreateQuestionUseCaseResponse = Either<
-  Error,
+  ResourceNotFoundError,
   {
     alert: Alert
   }
@@ -31,7 +32,7 @@ export class CreateAlertUseCase {
     const user = await this.usersRepository.findById(userId)
 
     if (!user) {
-      throw new Error('User not found.')
+      return left(new ResourceNotFoundError())
     }
 
     const alert = new Alert(randomUUID(), user, stockId, targetPrice)
