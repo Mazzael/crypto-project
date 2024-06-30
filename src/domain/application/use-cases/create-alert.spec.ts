@@ -29,11 +29,13 @@ describe('Create Alert', () => {
 
     const result = await sut.execute({
       userId: '1',
-      stockId: '2',
+      cryptoId: '2',
       targetPrice: 15,
     })
 
+    console.log(result.value.alert)
     expect(result.isRight()).toBe(true)
     expect(result.value?.alert).toEqual(inMemoryAlertsRepository.items[0])
+    expect(user.alerts).toHaveLength(1)
   })
 })

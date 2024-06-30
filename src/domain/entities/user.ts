@@ -1,9 +1,12 @@
+import { Alert } from './alert'
+
 export class User {
   private _id: string
   private _userName: string
   private _email: string
   private _passwordHash: string
-  private _favoriteStocksId: string[] = []
+  private _favoriteCryptosId: string[] = []
+  private _alerts: Alert[] = []
 
   constructor(
     id: string,
@@ -33,6 +36,10 @@ export class User {
     return this._userName
   }
 
+  get alerts() {
+    return this._alerts
+  }
+
   changeUserName(newUserName: string) {
     this._userName = newUserName
   }
@@ -41,9 +48,13 @@ export class User {
     this._passwordHash = newPasswordHash
   }
 
-  setAsFavoriteStock(stocksId: string[]) {
-    stocksId.forEach((stockId) => {
-      this._favoriteStocksId.push(stockId)
+  setAsFavoriteCrypto(cryptosId: string[]) {
+    cryptosId.forEach((cryptoId) => {
+      this._favoriteCryptosId.push(cryptoId)
     })
+  }
+
+  setAlert(alert: Alert) {
+    this._alerts.push(alert)
   }
 }

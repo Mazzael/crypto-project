@@ -1,18 +1,18 @@
-export class Stock {
+export class Crypto {
   private _id: string
   private _name: string
-  private _stockSymbol: string
+  private _cryptoSymbol: string
   private _currentPrice: number
 
   constructor(
     id: string,
     name: string,
-    stockSymbol: string,
+    cryptoSymbol: string,
     currentPrice: number,
   ) {
     this._id = id
     this._name = name
-    this._stockSymbol = stockSymbol
+    this._cryptoSymbol = cryptoSymbol
     this._currentPrice = currentPrice
   }
 }

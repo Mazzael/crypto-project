@@ -27,12 +27,12 @@ Regra de Negócio:
 
 Requisito:
 
-[x] O sistema deve permitir que os usuários criem alertas de preço para ações específicas.
+[x] O sistema deve permitir que os usuários criem alertas de preço para cryptos específicas.
 
 Regra de Negócio:
 
 [x] Um usuário pode criar múltiplos alertas.
-[x] Cada alerta deve ter um preço alvo e uma ação associada.
+[x] Cada alerta deve ter um preço alvo e uma crypto associada.
 [x] O alerta deve ser armazenado como ativo por padrão.
 
 4. Listagem de Alertas
@@ -55,35 +55,35 @@ Regra de Negócio:
 
 [x] Apenas o usuário que criou o alerta pode deletá-lo.
 
-6. Monitoramento de Preços de Ações
+6. Monitoramento de Preços de Cryptos
 
 Requisito: 
 
-- O sistema deve monitorar os preços das ações e verificar se algum preço alvo foi atingido.
+[] O sistema deve monitorar os preços das cryptos e verificar se algum preço alvo foi atingido.
 
 Regra de Negócio:
 
-- O sistema deve consultar periodicamente a API da CoinGecko para obter os preços atuais das ações.
-- Se o preço atual de uma ação atingir ou exceder o preço alvo de um alerta ativo, o alerta deve ser acionado (desativado) e uma notificação deve ser enviada ao usuário.
+[] O sistema deve consultar periodicamente a API da CoinGecko para obter os preços atuais das cryptos.
+[] Se o preço atual de uma crypto atingir ou exceder o preço alvo de um alerta ativo, o alerta deve ser acionado (desativado) e uma notificação deve ser enviada ao usuário.
 
 7. Notificação de Usuário
 
 Requisito: 
 
-- O sistema deve notificar o usuário quando um alerta de preço é acionado.
+[] O sistema deve notificar o usuário quando um alerta de preço é acionado.
 
 Regra de Negócio:
 
-- As notificações podem ser enviadas via email.
-- A notificação deve incluir o nome da ação, o preço alvo e o preço atual.
+[] As notificcryptos podem ser enviadas via email.
+[] A notificação deve incluir o nome da crypto, o preço alvo e o preço atual.
 
 8. Persistência de Dados
 
 Requisito: 
 
-- O sistema deve armazenar dados de usuários e alertas em um banco de dados relacional.
+[] O sistema deve armazenar dados de usuários e alertas em um banco de dados relacional.
 
 Regra de Negócio:
 
-- Os dados dos usuários e alertas devem ser persistidos de forma segura.
-- As informações sensíveis (como senhas) devem ser adequadamente protegidas (ex: hashing de senhas).
+[] Os dados dos usuários e alertas devem ser persistidos de forma segura.
+[] As informcryptos sensíveis (como senhas) devem ser adequadamente protegidas (ex: hashing de senhas).

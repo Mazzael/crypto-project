@@ -7,7 +7,7 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface CreateAlertUseCaseRequest {
   userId: string
-  stockId: string
+  cryptoId: string
   targetPrice: number
 }
 
@@ -26,7 +26,7 @@ export class CreateAlertUseCase {
 
   async execute({
     userId,
-    stockId,
+    cryptoId,
     targetPrice,
   }: CreateAlertUseCaseRequest): Promise<CreateQuestionUseCaseResponse> {
     const user = await this.usersRepository.findById(userId)
@@ -35,9 +35,11 @@ export class CreateAlertUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const alert = new Alert(randomUUID(), user, stockId, targetPrice)
+    const alert = new Alert(randomUUID(), user, cryptoId, targetPrice)
 
     this.alertsRepository.create(alert)
+
+    user.setAlert(alert)
 
     return right({ alert })
   }
