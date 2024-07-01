@@ -29,6 +29,7 @@ model Alert {
   targetPrice Float   @map("target_price")
   isActive    Boolean
   userId      String  @map("user_id")
+  cryptoId    String  @map("crypto_id")
 
   user User @relation(fields: [userId], references: [id])
 

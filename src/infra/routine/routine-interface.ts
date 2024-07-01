@@ -1,3 +1,9 @@
+import { Alert } from '@prisma/client'
+
 export abstract class RoutineInterface {
-  abstract scheduleStockPrices(cryptoId: string): Promise<void>
+  abstract getAlerts(): Promise<Alert[]>
+  abstract checkCryptoPrices(
+    cryptosIds: string[],
+    alerts: Alert[],
+  ): Promise<void>
 }
