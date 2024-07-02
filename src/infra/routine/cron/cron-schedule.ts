@@ -1,10 +1,10 @@
 import { Alert } from '@prisma/client'
 import { api } from '../../lib/axios'
 import { prisma } from '../../lib/prisma'
-import { RoutineInterface } from '../routine-interface'
 import { env } from '../../env/env'
+import { CronJobInterface } from '../cron-job-interface'
 
-export abstract class CronSchedule implements RoutineInterface {
+export class CronJob implements CronJobInterface {
   async getAlerts() {
     const alerts = await prisma.alert.findMany()
 
@@ -24,7 +24,7 @@ export abstract class CronSchedule implements RoutineInterface {
 
         filteredAlerts.forEach((alert) => {
           if (alert.targetPrice > response.data[alert.cryptoId].brl) {
-            // Todo
+            // Implementar evento
           }
         })
       } catch (error) {
