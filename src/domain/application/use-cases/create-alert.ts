@@ -35,11 +35,13 @@ export class CreateAlertUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const alert = new Alert(randomUUID(), user, cryptoId, targetPrice)
+    const alert = new Alert(randomUUID(), user.id, cryptoId, targetPrice)
 
     this.alertsRepository.create(alert)
 
     user.setAlert(alert)
+
+    this.usersRepository.save(user)
 
     return right({ alert })
   }
