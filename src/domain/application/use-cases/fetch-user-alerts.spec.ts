@@ -26,15 +26,15 @@ describe('Fetch user Alerts', () => {
     await inMemoryUsersRepository.create(user)
 
     const alert1 = makeAlert({
-      user,
+      userId: user.id,
     })
 
     const alert2 = makeAlert({
-      user,
+      userId: user.id,
     })
 
     const alert3 = makeAlert({
-      user,
+      userId: user.id,
     })
 
     await inMemoryAlertsRepository.create(alert1)
@@ -50,15 +50,15 @@ describe('Fetch user Alerts', () => {
     expect(result.value?.alerts).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          _user: user,
+          _userId: user.id,
           _id: alert1.id,
         }),
         expect.objectContaining({
-          _user: user,
+          _userId: user.id,
           _id: alert2.id,
         }),
         expect.objectContaining({
-          _user: user,
+          _userId: user.id,
           _id: alert3.id,
         }),
       ]),

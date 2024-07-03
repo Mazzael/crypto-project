@@ -17,25 +17,7 @@ fastifyServer.app
 
     schedule('* * * * *', async () => {
       const alerts = await cronJob.getAlerts()
-      const alertsMap = new Map<string, Array<string>>()
-
-      alerts.forEach((alert) => {
-        if (alertsMap.get(alert.cryptoId)) {
-          alertsMap.set(alert.cryptoId, [
-            ...(alertsMap.get(alert.cryptoId) ?? []),
-            alert.userId,
-          ])
-        } else {
-          alertsMap.set(alert.cryptoId, [alert.userId])
-        }
-      })
-
-      const iterator = alertsMap.keys()
-      const cryptoIds = []
-
-      for (const item of iterator) {
-        cryptoIds.push(item)
-      }
+      const cryptoIds = cronJob.getCryptoIdsFromAlerts(alerts)
 
       cronJob.checkCryptoPrices(cryptoIds, alerts)
     })
