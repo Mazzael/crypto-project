@@ -1,5 +1,5 @@
 import { Either, left, right } from '../../../core/either'
-import { Encrypter } from '../cryptography/encrypter'
+import { User } from '../../entities/user'
 import { HashComparer } from '../cryptography/hash-comparer'
 import { UsersRepository } from '../repositories/users-repository'
 import { WrongCreadentialsError } from './errors/wrong-credentials-error'
@@ -12,7 +12,7 @@ interface AuthenticateUserUseCaseRequest {
 type AtuhenticateUserUseCaseResponse = Either<
   WrongCreadentialsError,
   {
-    accessToken: string
+    user: User
   }
 >
 
@@ -20,7 +20,6 @@ export class AuthenticateUserUseCase {
   constructor(
     private usersRepository: UsersRepository,
     private hashComparer: HashComparer,
-    private encrypter: Encrypter,
   ) {}
 
   async execute({
@@ -42,10 +41,6 @@ export class AuthenticateUserUseCase {
       return left(new WrongCreadentialsError())
     }
 
-    const accessToken = await this.encrypter.encrypt({
-      sub: user.id,
-    })
-
-    return right({ accessToken })
+    return right({ user })
   }
 }

@@ -9,7 +9,7 @@ export class PrismaUsersRepository implements UsersRepository {
   async create(user: User): Promise<void> {
     const data = PrismaUserMapper.toPrisma(user)
 
-    this.prisma.user.create({
+    await this.prisma.user.create({
       data,
     })
   }

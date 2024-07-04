@@ -1,13 +1,11 @@
 import { schedule } from 'node-cron'
 import { env } from './env/env'
-import { FastifyServer } from './http/server/fastify'
 import { CronJob } from './routine/cron/cron-schedule'
-
-const fastifyServer = new FastifyServer()
+import { app } from './app'
 
 const cronJob = new CronJob()
 
-fastifyServer.app
+app
   .listen({
     host: '0.0.0.0',
     port: env.PORT,
