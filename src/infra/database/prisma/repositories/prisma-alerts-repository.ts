@@ -9,7 +9,7 @@ export class PrismaAlertsRepository implements AlertsRepository {
   async create(alert: Alert): Promise<void> {
     const data = PrismaAlertMapper.toPrisma(alert)
 
-    this.prisma.alert.create({
+    await this.prisma.alert.create({
       data,
     })
   }

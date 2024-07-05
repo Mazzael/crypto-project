@@ -59,7 +59,7 @@ export class CronJob implements CronJobInterface {
 
         filteredAlerts.forEach((alert) => {
           if (alert.targetPrice > response.data[alert.cryptoId].brl) {
-            // Implementar evento
+            console.log('testando')
           }
         })
       } catch (error) {
