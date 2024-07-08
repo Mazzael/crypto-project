@@ -17,7 +17,7 @@ export async function alertRoutes(app: FastifyInstance) {
   )
 
   app.delete(
-    'alert/:alertId',
+    '/alert/:alertId',
     { onRequest: [TokenVerification.verifyJWT] },
     deleteAlertController,
   )

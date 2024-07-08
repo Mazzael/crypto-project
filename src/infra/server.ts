@@ -2,8 +2,13 @@ import { schedule } from 'node-cron'
 import { env } from './env/env'
 import { CronJob } from './routine/cron/cron-schedule'
 import { app } from './app'
+import EventDispatcher from '../core/event/event-dispatcher'
+import { PrismaUsersRepository } from './database/prisma/repositories/prisma-users-repository'
+import { PrismaService } from './database/prisma/prisma-service'
 
-const cronJob = new CronJob()
+const eventDispatcher = new EventDispatcher()
+const prismaUsersRepository = new PrismaUsersRepository(new PrismaService())
+const cronJob = new CronJob(eventDispatcher, prismaUsersRepository)
 
 app
   .listen({
@@ -17,6 +22,6 @@ app
       const alerts = await cronJob.getAlerts()
       const cryptoIds = cronJob.getCryptoIdsFromAlerts(alerts)
 
-      cronJob.checkCryptoPrices(cryptoIds, alerts)
+      cronJob.sendNotificationByCryptoPrices(cryptoIds, alerts)
     })
   })

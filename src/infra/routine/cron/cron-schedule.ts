@@ -4,8 +4,17 @@ import { env } from '../../env/env'
 import { CronJobInterface } from '../cron-job-interface'
 import { PrismaAlertMapper } from '../../database/prisma/mappers/prisma-alert-mapper'
 import { Alert } from '../../../domain/entities/alert'
+import EventDispatcher from '../../../core/event/event-dispatcher'
+import { CryptoPriceReachedEvent } from '../../../domain/application/events/crypto-price-event/crypto-price-reached-event'
+import { CryptoPriceReachedHandler } from '../../../domain/application/events/crypto-price-event/handler/crypto-price-reached-handler'
+import { UsersRepository } from '../../../domain/application/repositories/users-repository'
 
 export class CronJob implements CronJobInterface {
+  constructor(
+    private eventDispatcher: EventDispatcher,
+    private usersRepository: UsersRepository,
+  ) {}
+
   async getAlerts() {
     const alerts = await prisma.alert.findMany()
 
@@ -46,7 +55,7 @@ export class CronJob implements CronJobInterface {
     return cryptoIds
   }
 
-  async checkCryptoPrices(cryptosIds: string[], alerts: Alert[]) {
+  async sendNotificationByCryptoPrices(cryptosIds: string[], alerts: Alert[]) {
     cryptosIds.forEach(async (cryptoId) => {
       try {
         const response = await api.get(
@@ -57,9 +66,23 @@ export class CronJob implements CronJobInterface {
           (alert) => alert.cryptoId === cryptoId,
         )
 
-        filteredAlerts.forEach((alert) => {
+        filteredAlerts.forEach(async (alert) => {
           if (alert.targetPrice > response.data[alert.cryptoId].brl) {
-            console.log('testando')
+            const cryptoPriceReachedHandler = new CryptoPriceReachedHandler()
+
+            this.eventDispatcher.register(
+              'CryptoPriceReachedEvent',
+              cryptoPriceReachedHandler,
+            )
+
+            const user = await this.usersRepository.findById(alert.userId)
+
+            const cryptoPriceReachedEvent = new CryptoPriceReachedEvent({
+              user,
+              cryptoId: alert.cryptoId,
+            })
+
+            this.eventDispatcher.notify(cryptoPriceReachedEvent)
           }
         })
       } catch (error) {
