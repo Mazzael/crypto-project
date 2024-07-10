@@ -22,6 +22,6 @@ app
       const alerts = await cronJob.getAlerts()
       const cryptoIds = cronJob.getCryptoIdsFromAlerts(alerts)
 
-      cronJob.sendNotificationByCryptoPrices(cryptoIds, alerts)
+      await cronJob.sendNotificationByCryptoPrices(cryptoIds, alerts)
     })
   })

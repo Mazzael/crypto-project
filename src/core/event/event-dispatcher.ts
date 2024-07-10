@@ -25,15 +25,15 @@ export default class EventDispatcher implements EventDispatcherInterface {
     }
   }
 
-  unregisterAll(): void {
+  async unregisterAll(): Promise<void> {
     this.eventHandlers = {}
   }
 
-  notify(event: EventInterface): void {
+  async notify(event: EventInterface): Promise<void> {
     const eventName = event.constructor.name
     if (this.eventHandlers[eventName]) {
-      this.eventHandlers[eventName].forEach((eventHandler) => {
-        eventHandler.handle(event)
+      this.eventHandlers[eventName].forEach(async (eventHandler) => {
+        await eventHandler.handle(event)
       })
     }
   }

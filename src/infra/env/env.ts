@@ -6,6 +6,8 @@ const envSchema = z.object({
   JWT_SECRET: z.string(),
   COINGECKO_API_KEY: z.string(),
   DATABASE_URL: z.string(),
+  GMAIL_USER: z.string().email(),
+  GMAIL_PASS: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)

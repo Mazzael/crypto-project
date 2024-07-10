@@ -16,7 +16,11 @@ export class CronJob implements CronJobInterface {
   ) {}
 
   async getAlerts() {
-    const alerts = await prisma.alert.findMany()
+    const alerts = await prisma.alert.findMany({
+      where: {
+        isActive: true,
+      },
+    })
 
     const domainAlerts = alerts.map((alert) => {
       return PrismaAlertMapper.toDomain({
@@ -80,13 +84,31 @@ export class CronJob implements CronJobInterface {
             const cryptoPriceReachedEvent = new CryptoPriceReachedEvent({
               user,
               cryptoId: alert.cryptoId,
+              targetPrice: alert.targetPrice,
+              price: response.data[alert.cryptoId].brl,
             })
 
-            this.eventDispatcher.notify(cryptoPriceReachedEvent)
+            await this.eventDispatcher.notify(cryptoPriceReachedEvent)
+
+            await this.eventDispatcher.unregisterAll()
+
+            alert.inactivate()
+
+            const prismaAlert = PrismaAlertMapper.toPrisma(alert)
+
+            await prisma.alert.update({
+              where: {
+                id: alert.id,
+              },
+
+              data: prismaAlert,
+            })
           }
         })
       } catch (error) {
         console.error(`Error when searching for crypto price: ${error}`)
+      } finally {
+        await this.eventDispatcher.unregisterAll()
       }
     })
   }
