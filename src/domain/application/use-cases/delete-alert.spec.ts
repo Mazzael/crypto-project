@@ -30,7 +30,7 @@ describe('Delete Alert', () => {
 
     const alert = makeAlert({
       id: '2',
-      user,
+      userId: user.id,
     })
 
     await inMemoryAlertsRepository.create(alert)
@@ -53,7 +53,7 @@ describe('Delete Alert', () => {
 
     const alert = makeAlert({
       id: '2',
-      user,
+      userId: user.id,
     })
 
     await inMemoryAlertsRepository.create(alert)

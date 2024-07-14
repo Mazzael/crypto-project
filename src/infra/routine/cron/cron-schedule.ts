@@ -4,16 +4,12 @@ import { env } from '../../env/env'
 import { CronJobInterface } from '../cron-job-interface'
 import { PrismaAlertMapper } from '../../database/prisma/mappers/prisma-alert-mapper'
 import { Alert } from '../../../domain/entities/alert'
-import EventDispatcher from '../../../core/event/event-dispatcher'
-import { CryptoPriceReachedEvent } from '../../../domain/application/events/crypto-price-event/crypto-price-reached-event'
-import { CryptoPriceReachedHandler } from '../../../domain/application/events/crypto-price-event/handler/crypto-price-reached-handler'
 import { UsersRepository } from '../../../domain/application/repositories/users-repository'
+import { sendAlertMail } from '../../mail-sender/nodemailer'
+import { ResourceNotFoundError } from '../../../domain/application/use-cases/errors/resource-not-found-error'
 
 export class CronJob implements CronJobInterface {
-  constructor(
-    private eventDispatcher: EventDispatcher,
-    private usersRepository: UsersRepository,
-  ) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async getAlerts() {
     const alerts = await prisma.alert.findMany({
@@ -72,25 +68,19 @@ export class CronJob implements CronJobInterface {
 
         filteredAlerts.forEach(async (alert) => {
           if (alert.targetPrice > response.data[alert.cryptoId].brl) {
-            const cryptoPriceReachedHandler = new CryptoPriceReachedHandler()
-
-            this.eventDispatcher.register(
-              'CryptoPriceReachedEvent',
-              cryptoPriceReachedHandler,
-            )
-
             const user = await this.usersRepository.findById(alert.userId)
 
-            const cryptoPriceReachedEvent = new CryptoPriceReachedEvent({
-              user,
-              cryptoId: alert.cryptoId,
-              targetPrice: alert.targetPrice,
-              price: response.data[alert.cryptoId].brl,
-            })
+            if (!user) {
+              throw new ResourceNotFoundError()
+            }
 
-            await this.eventDispatcher.notify(cryptoPriceReachedEvent)
-
-            await this.eventDispatcher.unregisterAll()
+            await sendAlertMail(
+              user.email,
+              user.userName,
+              alert.cryptoId,
+              alert.targetPrice,
+              response.data[alert.cryptoId].brl,
+            )
 
             alert.inactivate()
 
@@ -107,8 +97,6 @@ export class CronJob implements CronJobInterface {
         })
       } catch (error) {
         console.error(`Error when searching for crypto price: ${error}`)
-      } finally {
-        await this.eventDispatcher.unregisterAll()
       }
     })
   }

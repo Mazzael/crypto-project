@@ -1,7 +1,7 @@
 import { createTransport } from 'nodemailer'
 import { env } from '../env/env'
 
-export const transporter = createTransport({
+const transporter = createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
   port: 587,
@@ -11,6 +11,31 @@ export const transporter = createTransport({
     pass: env.GMAIL_PASS,
   },
 })
+
+export async function sendAlertMail(
+  email: string,
+  userName: string,
+  cryptoId: string,
+  targetPrice: number,
+  currentPrice: number,
+) {
+  try {
+    await transporter.sendMail({
+      from: {
+        name: 'Crypto Notificator',
+        address: env.GMAIL_USER,
+      },
+      to: email,
+      subject: 'Crypto price reached email',
+      text: `
+        Hello ${userName}! The alert you setted for when ${cryptoId} reached
+        ${targetPrice} was triggered, and it's available for ${currentPrice}
+      `,
+    })
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 // const mailOptions = {
 //   from: {

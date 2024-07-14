@@ -59,31 +59,31 @@ Regra de Negócio:
 
 Requisito: 
 
-[] O sistema deve monitorar os preços das cryptos e verificar se algum preço alvo foi atingido.
+[x] O sistema deve monitorar os preços das cryptos e verificar se algum preço alvo foi atingido.
 
 Regra de Negócio:
 
-[] O sistema deve consultar periodicamente a API da CoinGecko para obter os preços atuais das cryptos.
-[] Se o preço atual de uma crypto atingir ou exceder o preço alvo de um alerta ativo, o alerta deve ser acionado (desativado) e uma notificação deve ser enviada ao usuário.
+[x] O sistema deve consultar periodicamente a API da CoinGecko para obter os preços atuais das cryptos.
+[x] Se o preço atual de uma crypto atingir ou exceder o preço alvo de um alerta ativo, o alerta deve ser acionado (desativado) e uma notificação deve ser enviada ao usuário.
 
 7. Notificação de Usuário
 
 Requisito: 
 
-[] O sistema deve notificar o usuário quando um alerta de preço é acionado.
+[x] O sistema deve notificar o usuário quando um alerta de preço é acionado.
 
 Regra de Negócio:
 
-[] As notificcryptos podem ser enviadas via email.
-[] A notificação deve incluir o nome da crypto, o preço alvo e o preço atual.
+[x] As notificações podem ser enviadas via email.
+[x] A notificação deve incluir o nome da crypto, o preço alvo e o preço atual.
 
 8. Persistência de Dados
 
 Requisito: 
 
-[] O sistema deve armazenar dados de usuários e alertas em um banco de dados relacional.
+[x] O sistema deve armazenar dados de usuários e alertas em um banco de dados relacional.
 
 Regra de Negócio:
 
-[] Os dados dos usuários e alertas devem ser persistidos de forma segura.
-[] As informcryptos sensíveis (como senhas) devem ser adequadamente protegidas (ex: hashing de senhas).
+[x] Os dados dos usuários e alertas devem ser persistidos de forma segura.
+[x] As informcryptos sensíveis (como senhas) devem ser adequadamente protegidas (ex: hashing de senhas).
