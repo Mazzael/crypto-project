@@ -31,3 +31,6 @@ jobs:
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/crypto-project?schema=public"
+          COINGECKO_API_KEY: testing
+          GMAIL_USER: user
+          GMAIL_PASS: pass
