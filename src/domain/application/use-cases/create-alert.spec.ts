@@ -33,7 +33,6 @@ describe('Create Alert', () => {
       targetPrice: 15,
     })
 
-    console.log(result.value.alert)
     expect(result.isRight()).toBe(true)
     expect(result.value?.alert).toEqual(inMemoryAlertsRepository.items[0])
     expect(user.alerts).toHaveLength(1)
